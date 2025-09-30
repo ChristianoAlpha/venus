@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const particle = document.createElement('div');
     particle.classList.add('particle');
     
-    const size = Math.random() * 8 + 4; // Aumentado o tamanho máximo para 12px
+    const size = Math.random() * 8 + 4;
     const posX = Math.random() * 100;
     const posY = Math.random() * 100;
     const duration = Math.random() * 5 + 3;
@@ -21,23 +21,20 @@ document.addEventListener('DOMContentLoaded', function() {
     particle.style.animationDuration = `${duration}s`;
     particle.style.animationDelay = `${delay}s`;
     particle.style.opacity = opacity;
-    particle.style.background = `hsl(43, 100%, 50%)`; // Dourado
-    particle.style.borderRadius = '50%'; // Tornando as partículas circulares
+    
     profileWrapper.appendChild(particle);
   }
 
-
-
   // Animações de fundo com logos
   const bgAnimations = document.querySelector('.background-animations');
-  const bgLogoCount = 20; // Número de logos flutuantes no fundo
+  const bgLogoCount = 20;
   for (let i = 0; i < bgLogoCount; i++) {
     const bgLogo = document.createElement('img');
     bgLogo.src = 'venus.png';
     bgLogo.classList.add('background-logo');
     bgLogo.style.left = `${Math.random() * 100}%`;
     bgLogo.style.animationDelay = `${Math.random() * 10}s`;
-    bgLogo.style.animationDuration = `${Math.random() * 20 + 20}s`; // Lento, 20-40s
+    bgLogo.style.animationDuration = `${Math.random() * 20 + 20}s`;
     bgAnimations.appendChild(bgLogo);
   }
 
@@ -72,29 +69,34 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(el);
   });
 
-  // Modal para portfolio
+  // Modal de vídeos no portfólio
   const modal = document.getElementById('portfolio-modal');
-  const modalImg = document.getElementById('modal-img');
+  const modalVideo = document.getElementById('modal-video');
   const modalTitle = document.getElementById('modal-title');
   const modalDesc = document.getElementById('modal-desc');
   const closeBtn = document.querySelector('.modal-close');
 
-  document.querySelectorAll('.portfolio-img').forEach(img => {
-    img.addEventListener('click', function() {
+  document.querySelectorAll('.portfolio-video').forEach(item => {
+    item.addEventListener('click', function() {
       modal.style.display = 'flex';
-      modalImg.src = this.src;
-      modalTitle.textContent = this.dataset.title || 'Título Padrão';
-      modalDesc.textContent = this.dataset.desc || 'Descrição Padrão';
+      modalTitle.textContent = this.dataset.title;
+      modalDesc.textContent = this.dataset.desc;
+
+      // Gerar embed do Instagram
+      const videoUrl = this.dataset.url;
+      modalVideo.src = videoUrl.replace("/reel/", "/p/") + "embed";
     });
   });
 
   closeBtn.addEventListener('click', function() {
     modal.style.display = 'none';
+    modalVideo.src = "";
   });
 
   window.addEventListener('click', function(e) {
     if (e.target === modal) {
       modal.style.display = 'none';
+      modalVideo.src = "";
     }
   });
 
