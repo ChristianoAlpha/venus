@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Simulação de envio de formulário
   document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    alert('Mensagem enviada com sucesso! (Simulação - integre backend no Laravel para envio real)');
+    alert('Não podemos enviar mensagens neste momento');
     this.reset();
   });
 });
