@@ -25,15 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
     profileWrapper.appendChild(particle);
   }
 
-  // Animações de fundo com logos
+  // Animações de fundo com logos espalhados
   const bgAnimations = document.querySelector('.background-animations');
-  const bgLogoCount = 20;
+  const bgLogoCount = 25;
   for (let i = 0; i < bgLogoCount; i++) {
     const bgLogo = document.createElement('img');
     bgLogo.src = 'venus.png';
     bgLogo.classList.add('background-logo');
     bgLogo.style.left = `${Math.random() * 100}%`;
-    bgLogo.style.animationDelay = `${Math.random() * 10}s`;
+    bgLogo.style.top = `${Math.random() * 100}%`;
+    bgLogo.style.animationDelay = `${Math.random() * 15}s`;
     bgLogo.style.animationDuration = `${Math.random() * 20 + 20}s`;
     bgAnimations.appendChild(bgLogo);
   }
@@ -82,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
       modalTitle.textContent = this.dataset.title;
       modalDesc.textContent = this.dataset.desc;
 
-      // Gerar embed do Instagram
+      // Embed do Instagram
       const videoUrl = this.dataset.url;
-      modalVideo.src = videoUrl.replace("/reel/", "/p/") + "embed";
+      modalVideo.src = videoUrl + "embed";
     });
   });
 
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Simulação de envio de form
+  // Simulação de envio de formulário
   document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     alert('Mensagem enviada com sucesso! (Simulação - integre backend no Laravel para envio real)');
