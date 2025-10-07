@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Partículas no hero
+  // Partículas no hero (mantive igual)
   const profileWrapper = document.querySelector('.profile-wrapper');
   const particleCount = 40;
   
@@ -70,27 +70,29 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(el);
   });
 
-  // Modal de vídeos no portfólio
+  // Modal de vídeos no portfólio (lazy: só carrega iframe no modal)
   const modal = document.getElementById('portfolio-modal');
   const modalVideo = document.getElementById('modal-video');
   const modalTitle = document.getElementById('modal-title');
   const modalDesc = document.getElementById('modal-desc');
   const closeBtn = document.querySelector('.modal-close');
 
-  document.querySelectorAll('.portfolio-video').forEach(item => {
+  // Abrir modal quando clicam numa miniatura (thumbnail)
+  document.querySelectorAll('.portfolio-thumb').forEach(item => {
     item.addEventListener('click', function() {
-      modal.style.display = 'flex';
-      modalTitle.textContent = this.dataset.title;
-      modalDesc.textContent = this.dataset.desc;
-
-      // Embed do Instagram
       const videoUrl = this.dataset.url;
-      modalVideo.src = videoUrl + "embed";
+      const embedUrl = ensureEmbedUrl(videoUrl);
+      modal.style.display = 'flex';
+      modalTitle.textContent = this.dataset.title || '';
+      modalDesc.textContent = this.dataset.desc || '';
+      // carrega o embed só no modal (lazy)
+      modalVideo.src = embedUrl;
     });
   });
 
   closeBtn.addEventListener('click', function() {
     modal.style.display = 'none';
+    // remover src para parar o video
     modalVideo.src = "";
   });
 
@@ -107,4 +109,15 @@ document.addEventListener('DOMContentLoaded', function() {
     alert('Não podemos enviar mensagens neste momento');
     this.reset();
   });
+
+  // --- Funções auxiliares ---
+  function ensureEmbedUrl(url) {
+    if (!url) return '';
+    url = url.trim();
+    // remove query
+    const q = url.indexOf('?');
+    if (q !== -1) url = url.substring(0, q);
+    if (!url.endsWith('/')) url = url + '/';
+    return url + 'embed';
+  }
 });
